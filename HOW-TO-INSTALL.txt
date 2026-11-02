@@ -1,0 +1,47 @@
+HOUSE BOX - HOW TO MAKE IT A REAL APP ON THE PHONE
+==================================================
+You do this ONE time (about 15 minutes). Everything is free.
+
+PART 1 - Make the shared database (so all phones see the same data)
+1. On a computer, go to console.firebase.google.com and sign in with Google.
+2. Click "Create a project". Name it: house-box. Turn OFF Google Analytics. Create.
+3. In the left menu: Build > Realtime Database > "Create Database".
+   Choose any location. Choose "Start in locked mode". Enable.
+4. Click the "Rules" tab. Delete everything and paste this, then click Publish:
+
+   {
+     "rules": {
+       "house": { ".read": true, ".write": true }
+     }
+   }
+
+5. Click the "Data" tab. At the top you see a link like:
+   https://house-box-xxxxx-default-rtdb.firebaseio.com
+   Copy it (without a "/" at the end).
+
+PART 2 - Put your link in the app
+6. Open the file config.js with Notepad.
+7. Replace PASTE_YOUR_DATABASE_LINK_HERE with your link. Keep the quotes. Save.
+
+PART 3 - Put the app online
+8. Go to app.netlify.com/drop (free, sign up with Google).
+9. Drag the WHOLE folder "house-box-app" onto the page.
+10. You get a link like https://something.netlify.app  - this is your app link.
+11. IMPORTANT: Netlify may set the site to "Private" (only your team can open it).
+    Click "Make public" (or set access to Public) so your housemates can open it.
+12. To update the app later: open your project > Deploys and drop the folder again.
+
+PART 4 - Install on each phone
+- Android (Chrome): open the link > menu (3 dots) > "Install app".
+- iPhone (Safari): open the link > Share button > "Add to Home Screen".
+The icon appears on the home screen and opens full screen like Glovo or Uber.
+
+PART 5 - First use
+- The HOST opens the app first and creates the admin username + password.
+- In Settings, the host adds a username + password for each housemate.
+- Everyone logs in with their own username and password.
+
+IMPORTANT
+- Do not share the app link or database link outside the house.
+- If you forget the admin password: in Firebase > Realtime Database > Data,
+  delete the "admin" line under "house", then open the app and create a new one.

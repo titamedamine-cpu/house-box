@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>House Box</title>
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="House Box"><script src="config.js"></script>
+<meta name="theme-color" content="#FFC244"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F6FB;--sf:#fff;--ink:#14172B;--mu:#5E6384;--br:#2339C9;--bi:#fff;--ac:#F2B705;--ok:#127A4B;--bad:#C2352B;--ln:#DDE0EE;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1020;--sf:#181B33;--ink:#EEF0FF;--mu:#9AA0C8;--br:#7C8CFF;--bi:#0E1020;--ok:#4FD08F;--bad:#FF7A70;--ln:#2A2E52}}
+:root[data-theme="dark"]{--bg:#0E1020;--sf:#181B33;--ink:#EEF0FF;--mu:#9AA0C8;--br:#7C8CFF;--bi:#0E1020;--ok:#4FD08F;--bad:#FF7A70;--ln:#2A2E52}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 "Bricolage Grotesque",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:22px;font-weight:800;margin:4px 0 14px}
+h2{font-size:17px;font-weight:600;margin:22px 0 8px}
+.box{background:var(--br);color:var(--bi);border-radius:22px;padding:22px 20px}
+.box .n{font-size:52px;font-weight:800;line-height:1.05;letter-spacing:-1px}
+.box p{margin:6px 0 0;opacity:.9}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:6px 14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln)}
+.row:last-child{border-bottom:0}
+.sub{color:var(--mu);font-size:14px}
+.pos{color:var(--ok);font-weight:600}.neg{color:var(--bad);font-weight:600}
+button,select,input{font:inherit;color:var(--ink)}
+button{border:0;border-radius:12px;padding:12px 16px;background:var(--br);color:var(--bi);font-weight:600;cursor:pointer}
+button.alt{background:var(--sf);color:var(--ink);border:1px solid var(--ln)}
+button.sm{padding:7px 12px;font-size:14px}
+button.x{background:none;color:var(--mu);padding:4px 8px;font-size:18px}
+button.wide{width:100%;margin-top:12px}
+button.gold{background:var(--ac);color:#14172B}
+input,select{width:100%;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px;margin:4px 0 12px}
+label{display:block;font-size:14px;color:var(--mu)}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.seg{display:flex;gap:6px;margin-bottom:16px}.seg button{flex:1;padding:10px 4px;font-size:14px;background:var(--sf);color:var(--ink);border:1px solid var(--ln)}
+.seg button.on{background:var(--br);color:var(--bi);border-color:var(--br)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.chip{padding:8px 14px;border-radius:99px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);font-size:15px}
+.chip.on{background:var(--ac);color:#14172B;border-color:var(--ac);font-weight:600}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;color:var(--mu);padding:10px 2px;font-size:14px}
+nav button.on{color:var(--br)}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.show{opacity:1}
+.tip{background:var(--sf);border:1px dashed var(--ac);border-radius:12px;padding:10px 14px;margin-top:14px;font-size:14px}
+textarea{width:100%;background:var(--sf);color:var(--ink);border:1px solid var(--ln);border-radius:12px;padding:12px;font:inherit;font-size:14px;resize:none}
+a.btn{display:block;text-align:center;text-decoration:none;border-radius:12px;padding:12px 16px;background:#0E7A3E;color:#fff;font-weight:600;margin-top:12px}
+.mail{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln)}.mail:last-child{border-bottom:0}
+.av{width:40px;height:40px;border-radius:50%;background:var(--ln);display:grid;place-items:center;font-weight:800;flex:none}
+.mail.new .av{background:var(--ac);color:#14172B}
+.mb{flex:1;min-width:0}.mt{display:flex;justify-content:space-between;gap:8px}
+:root{--bg:#F4F4F4;--sf:#fff;--ink:#1F1F1F;--mu:#666;--br:#00826A;--bi:#fff;--ac:#FFC244;--ok:#00826A;--bad:#D6372B;--ln:#EBEBEB}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--sf:#1E1E1E;--ink:#F3F3F3;--mu:#A3A3A3;--br:#2FD3AF;--bi:#0B1F1A;--ok:#4FD8A8;--bad:#FF8A80;--ln:#2E2E2E}}
+:root[data-theme="dark"]{--bg:#121212;--sf:#1E1E1E;--ink:#F3F3F3;--mu:#A3A3A3;--br:#2FD3AF;--bi:#0B1F1A;--ok:#4FD8A8;--bad:#FF8A80;--ln:#2E2E2E}
+body{font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px}
+h1{font-size:24px;font-weight:700;margin:4px 0 14px}
+h2{font-size:18px;font-weight:700;margin:26px 0 10px}
+button{border-radius:999px;padding:14px 20px;font-weight:600}
+button.sm{padding:8px 16px;font-size:14px}
+button.x{border-radius:8px;padding:4px 8px}
+button.gold{color:#1F1F1F}
+input,select,textarea{border-radius:14px}
+.card{border:0;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:4px 16px}
+.box{background:var(--ac);color:#1F1F1F;border-radius:24px;position:relative;overflow:hidden}
+.box::after{content:'';position:absolute;right:-34px;top:-34px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.3)}
+.box>*{position:relative;z-index:1}
+.box .n{font-size:56px;font-weight:700}
+.box button.gold{background:#1F1F1F;color:#fff}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.top h1{margin:0}
+.avs{display:flex;padding-left:8px}
+.avs i{width:34px;height:34px;border-radius:50%;background:var(--ac);color:#1F1F1F;display:grid;place-items:center;font:700 14px/1 "Poppins",sans-serif;margin-left:-8px;border:2px solid var(--bg)}
+.avs i:nth-child(2){background:var(--br);color:var(--bi)}.avs i:nth-child(3){background:var(--ink);color:var(--bg)}.avs i:nth-child(4){background:#FFE29A;color:#1F1F1F}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.tile{background:var(--sf);color:var(--ink);border-radius:18px;padding:12px 2px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.tile span{font-size:26px;line-height:1}
+.seg button{border-radius:999px}.seg button.on{background:var(--ac);color:#1F1F1F;border-color:var(--ac)}
+nav{border-top:0;box-shadow:0 -2px 14px rgba(0,0,0,.08)}
+nav button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;border-radius:0;padding:8px 2px}
+nav .ic{font-size:21px;line-height:1;filter:grayscale(1);opacity:.55}
+nav button.on{color:var(--br)}nav button.on .ic{filter:none;opacity:1}
+.mrow{display:flex;align-items:center;gap:6px}.mrow input{flex:1}.mrow .x{margin-bottom:12px}
+.qa{display:flex;gap:8px;margin-top:14px}.qa input{margin:0;flex:1;background:#fff;color:#1F1F1F;border-color:transparent}.qa button{padding:12px 22px}
+.tiles{grid-template-columns:repeat(auto-fit,minmax(70px,1fr))}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div id="toast" role="status"></div>
+<nav id="nav"></nav>
+<script>
+const KEY='houseBox.v1';
+const def=()=>({members:[1,2,3,4].map(i=>({id:'m'+i,name:'Housemate '+i})),topup:20,log:[],gone:[],users:{},admin:null});
+let S=def(),ref=null,tab='house',mode='exp',split=new Set();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(def(),JSON.parse(r))}catch(e){}
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nm=id=>esc((S.members.concat(S.gone||[]).find(m=>m.id===id)||{name:'?'}).name);
+const fmt=n=>(Math.round(n*100)/100).toLocaleString('en',{maximumFractionDigits:2})+' DH';
+const save=()=>{S.rev=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}try{if(ref)Promise.resolve(ref.set(JSON.parse(JSON.stringify(S)))).then(()=>{if(syncErr){syncErr='';if(tab==='house')render()}},e=>{syncErr=(e&&e.code)||'error';if(tab==='house')render()})}catch(e){}};
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const num=v=>+String(v).replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776).replace(',','.').replace(/[^0-9.]/g,'')||0;
+const err=t=>{const e=$('#err');if(e)e.textContent=t;toast(t)};
+const fix=d=>{const s=Object.assign(def(),JSON.parse(JSON.stringify(d||{}))),A=x=>Array.isArray(x)?x:Object.values(x||{});s.log=A(s.log);s.members=A(s.members);s.gone=A(s.gone);s.log.forEach(e=>{if(e.split)e.split=A(e.split)});return s};
+window.addEventListener('error',ev=>err('Error: '+ev.message));
+const all=()=>S.members.map(m=>m.id);
+const opts=()=>S.members.map(m=>`<option value="${m.id}"${m.id===me?' selected':''}>${esc(m.name)}</option>`).join('');
+
+function calc(){
+  const bal={},put={};S.members.concat(S.gone||[]).forEach(m=>{bal[m.id]=0;put[m.id]=0});let box=0;
+  S.log.forEach(e=>{
+    if(e.t==='exp'){bal[e.who]+=e.amt;e.split.forEach(id=>{bal[id]-=e.amt/e.split.length})}
+    else if(e.t==='in'){box+=e.amt;if(e.who)put[e.who]+=e.amt}
+    else if(e.t==='out'){box-=e.amt}
+    else if(e.t==='pay'){bal[e.from]+=e.amt;bal[e.to]-=e.amt}
+  });
+  return{bal,put,box};
+}
+function plan(bal){
+  const d=[],c=[];
+  S.members.forEach(m=>{const b=Math.round(bal[m.id]*100)/100;if(b<-0.01)d.push({id:m.id,a:-b});else if(b>0.01)c.push({id:m.id,a:b})});
+  d.sort((x,y)=>y.a-x.a);c.sort((x,y)=>y.a-x.a);const out=[];
+  while(d.length&&c.length){const x=Math.min(d[0].a,c[0].a);out.push({from:d[0].id,to:c[0].id,amt:Math.round(x*100)/100});d[0].a-=x;c[0].a-=x;if(d[0].a<.01)d.shift();if(c[0].a<.01)c.shift()}
+  return out;
+}
+
+function house(){
+  const{bal,put,box}=calc(),p=plan(bal);
+  return `${hdr()}${syncErr?`<div class='tip' style='margin:0 0 12px'>Saved on this phone only. Sharing with your housemates failed (${esc(syncErr)}). Ask the person who made the app to share it with you so you can edit, not only view.</div>`:''}
+  <div class="box"><div class="sub" style="color:inherit;opacity:.85">In the box now</div><div class="n">${fmt(box)}</div>
+  <p>When supplies run out, everyone puts in ${fmt(S.topup)}.</p>
+  ${isAdmin?`<div class='qa'><input id='qa' type='text' inputmode='decimal' autocomplete='off' placeholder='Put an amount (DH)' aria-label='Amount to put in the box'><button class="gold" onclick="quickAdd()">Add</button></div><button class="gold wide" onclick="go('add','in')">Top up the box</button>`:''}</div>${tiles()}
+  <h2>Put in the box so far</h2>
+  <div class="card">${S.members.map(m=>`<div class="row"><span>${esc(m.name)}</span><b>${fmt(put[m.id])}</b></div>`).join('')}</div>
+  <h2>Shared purchases</h2>
+  <div class="card">${S.members.map(m=>{const b=Math.round(bal[m.id]*100)/100;return `<div class="row"><span>${esc(m.name)}</span>${b>0.01?`<span class="pos">gets back ${fmt(b)}</span>`:b<-0.01?`<span class="neg">owes ${fmt(-b)}</span>`:`<span class="sub">all square</span>`}</div>`}).join('')}</div>
+  <h2>Who pays who</h2>
+  <div class="card">${p.length?p.map((x,i)=>`<div class="row"><span>${nm(x.from)} pays ${nm(x.to)} <b>${fmt(x.amt)}</b></span>${isAdmin?`<button class="sm alt" onclick="settle(${i})">Mark paid</button>`:''}</div>`).join(''):`<div class="row sub">Nobody owes anything.</div>`}</div>`;
+}
+
+function addTab(){if(!isAdmin)mode='exp';
+  const seg=!isAdmin?'':`<div class="seg">${[['exp','I bought something'],['in','Add to box'],['out','Box spent']].map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="go('add','${k}')">${l}</button>`).join('')}</div>`;
+  if(mode==='exp'){
+    if(!split.size)split=new Set(all());
+    return `<h1>Add</h1>${seg}
+    <label>Who paid from their own money?<select id="who"${isAdmin?'':' disabled'}>${opts()}</select></label>
+    <label>What did they buy?<input id="note" placeholder="Rice, gas bottle, cleaning stuff…"></label>
+    <label>Amount (DH)<input id="amt" type="text" inputmode="decimal" autocomplete="off" oninput="pv()"></label>
+    <label>Who shares this cost?</label>
+    <div class="chips">${S.members.map(m=>`<button class="chip ${split.has(m.id)?'on':''}" data-id="${m.id}" onclick="tg('${m.id}',this)">${esc(m.name)}</button>`).join('')}</div>
+    <p class="sub" id="pv"></p><p class="neg" id="err"></p>
+    <button class="wide" onclick="addExp()">Save and split between housemates</button>`;
+  }
+  if(mode==='in')return `<h1>Add</h1>${seg}
+    <div class="card" style="padding:16px"><b>Supplies finished?</b>
+    <p class="sub" style="margin:4px 0 0">Each of the ${S.members.length} adds ${fmt(S.topup)}, so ${fmt(S.topup*S.members.length)} goes in the box.</p>
+    <button class="gold wide" onclick="everyone()">Everyone adds ${fmt(S.topup)}</button></div>
+    <h2>Or one person adds</h2>
+    <label>Who?<select id="who"><option value="">Not a person (just add money)</option>${opts()}</select></label>
+    <label>Amount (DH)<input id="amt" type="text" inputmode="decimal" autocomplete="off" value="${S.topup}"></label>
+    <button class="wide" onclick="addIn()">Put in the box</button>`;
+  return `<h1>Add</h1>${seg}
+    <p class="sub">Money taken from the box to buy things for everyone.</p>
+    <label>What was bought?<input id="note" placeholder="Soap, sugar, tea…"></label>
+    <label>Amount (DH)<input id="amt" type="text" inputmode="decimal" autocomplete="off"></label>
+    <button class="wide" onclick="addOut()">Take from box</button>`;
+}
+
+function histTab(){
+  const rows=S.log.slice().reverse().map(e=>{
+    const d=new Date(e.ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    let a,b='';
+    if(e.t==='exp'){a=`${nm(e.who)} paid <b>${fmt(e.amt)}</b> for ${esc(e.note)}`;b=e.split.length===S.members.length?'shared by everyone':'shared by '+e.split.map(nm).join(', ')}
+    else if(e.t==='in'){a=e.who?`${nm(e.who)} put <b>${fmt(e.amt)}</b> in the box`:`<b>${fmt(e.amt)}</b> added to the box`}
+    else if(e.t==='out'){a=`Box paid <b>${fmt(e.amt)}</b> for ${esc(e.note)}`}
+    else{a=`${nm(e.from)} paid ${nm(e.to)} <b>${fmt(e.amt)}</b>`}
+    return `<div class="row"><div>${a}<div class="sub">${d}${b?' · '+b:''}</div></div><button class="x"${isAdmin?'':' hidden'} aria-label="Delete" onclick="sure('d${e.id}',this,'Delete?',()=>del('${e.id}'))">×</button></div>`}).join('');
+  return `<h1>History</h1><div class="card">${rows||'<div class="row sub">Nothing yet. Add your first expense.</div>'}</div>`;
+}
+
+function setTab(){if(!isAdmin)return meTab();
+  return `<h1>Settings</h1>
+  <label>Top-up amount per person (DH)<input type="number" inputmode="decimal" min="0" step="any" value="${S.topup}" onchange="S.topup=Math.max(0,+this.value||0);save();toast('Saved')"></label>
+  <h2>Housemates (${S.members.length})</h2>
+  <div id='err' class='neg'></div>${S.members.map(m=>`<div class='mrow'><input value="${esc(m.name)}" aria-label="Name" onchange="ren('${m.id}',this.value)"><button class='x' aria-label='Remove' data-m='${m.id}' onclick='askRm(this)'>×</button></div><div class='mrow'><input id='u_${m.id}' placeholder='Username' autocapitalize='none' value='${esc((S.users&&S.users[m.id]||{}).user||'')}'><input id='p_${m.id}' type='password' autocomplete='new-password' placeholder='${S.users&&S.users[m.id]?'New password':'Password'}'><button class='sm' data-m='${m.id}' onclick='setLogin(this.dataset.m)'>Save</button></div>`).join('')}<button class='alt wide' onclick='addM()'>+ Add housemate</button>
+  <div class="tip">${ref?'Shared: everyone who opens this page with access sees the same data.':'Saved on this phone only. Other phones will not see your entries.'}</div>
+  <button class="alt wide" onclick="logout()">Log out</button><button class="alt wide" onclick="sure('reset',this,'Tap again to erase everything',resetAll)">Reset everything</button>`;
+}
+
+function render(){const A=acct();isAdmin=!!A&&A.role==='admin';if(A&&A.role==='member')me=A.id;
+  let v;try{v=!roleReady?'<p class=sub>Loading…</p>':!A?loginView():{house,add:addTab,inb:inbox,hist:histTab,set:setTab,done:doneTab}[tab]()}catch(e){v=`<h1>Oops</h1><p class='neg'>${esc(e.message)}</p><button onclick='home()'>Back to House</button>`}
+  $('#app').innerHTML=(connErr?`<div class='tip' style='margin:0 0 12px'>${esc(connErr)}</div>`:'')+v;
+  $('#nav').innerHTML=!A?'':[['house','House'],['add','Add'],['inb','Inbox'+badge()],['hist','History'],['set',isAdmin?'Settings':'Me']].map(([k,l])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')"><span class='ic'>${IC[k]}</span>${l}</button>`).join('');
+  if(tab==='add'&&mode==='exp')pv();
+}
+function go(t,m){tab=t;if(m){mode=m;if(m==='exp')split=new Set(all())}render();scrollTo(0,0)}
+function tg(id,el){split.has(id)?split.delete(id):split.add(id);el.classList.toggle('on');pv()}
+function pv(){const e=$('#pv');if(!e)return;const a=num($('#amt').value);e.textContent=a>0&&split.size?`Each of the ${split.size} pays ${fmt(a/split.size)}.`:''}
+function push(e){S.log.push(Object.assign({id:uid(),ts:Date.now()},e));save()}
+function addExp(){try{addExp2()}catch(e){err('Could not save: '+e.message)}}
+function addExp2(){
+  const a=num($('#amt').value);if(!(a>0))return err('Enter the amount, for example 120');if(!split.size)return err('Pick who shares it');
+  push({t:'exp',who:$('#who').value,amt:a,note:$('#note').value.trim()||'something for the house',split:[...split]});
+  last=S.log[S.log.length-1].id;toast('Expense saved');go('done');
+}
+function everyone(){if(!adm())return;S.members.forEach(m=>S.log.push({id:uid(),ts:Date.now(),t:'in',who:m.id,amt:S.topup}));save();toast('Box topped up');go('house')}
+function addIn(){if(!adm())return;const a=num($('#amt').value);if(!(a>0))return toast('Enter the amount');push({t:'in',who:$('#who').value||null,amt:a});toast('Added to box');go('house')}
+function addOut(){if(!adm())return;const a=num($('#amt').value);if(!(a>0))return toast('Enter the amount');push({t:'out',amt:a,note:$('#note').value.trim()||'house supplies'});toast('Saved');go('house')}
+function settle(i){if(!adm())return;const x=plan(calc().bal)[i];if(x){push({t:'pay',from:x.from,to:x.to,amt:x.amt});toast('Marked as paid');render()}}
+let armed=null,last=null,me=null,syncErr='',isAdmin=false,roleReady=false,isOwner=false,setupOpen=false,sess=null;
+try{sess=JSON.parse(localStorage.getItem('houseBox.sess'))}catch(e){}
+const adm=()=>isAdmin||(toast('Only the host can do this'),false);
+try{me=localStorage.getItem('houseBox.me')}catch(e){}
+const dt=ts=>new Date(ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+function msgs(id){const r=[];S.log.forEach(e=>{if(e.t==='exp'&&e.who!==id&&e.split.includes(id))r.push({e,amt:e.amt/e.split.length,paid:!!(e.paid&&e.paid[id])})});return r.reverse()}
+function owedTo(id){const r=[];S.log.forEach(e=>{if(e.t==='exp'&&e.who===id)e.split.forEach(m=>{if(m!==id&&S.members.some(x=>x.id===m))r.push({e,from:m,amt:e.amt/e.split.length,paid:!!(e.paid&&e.paid[m])})})});return r.reverse()}
+function payFor(eid,mid){const e=S.log.find(x=>x.id===eid);if(!e||!mid)return;if(!isAdmin&&mid!==me&&e.who!==me)return;e.paid=e.paid||{};if(e.paid[mid])return;e.paid[mid]=true;S.log.push({id:uid(),ts:Date.now(),t:'pay',from:mid,to:e.who,amt:e.amt/e.split.length,ref:eid});save();toast('Marked as paid');render()}
+const IC={house:'🏠',add:'➕',inb:'📥',hist:'🕘',set:'⚙️'};
+function hdr(){const n=me&&S.members.find(m=>m.id===me);return `<div class='top'><div><div class='sub'>${isAdmin?'Host (admin)':'Housemate'}</div><h1>${n?'Hi, '+esc(n.name)+' 👋':'House Box'}</h1></div><div class='avs'>${S.members.slice(0,4).map(m=>`<i>${esc((m.name[0]||'?').toUpperCase())}</i>`).join('')}</div></div>`}
+function tiles(){return `<div class='tiles'>${[['🛒','I bought','add:exp'],['🧾','Box spent','add:out'],['📥','Inbox','inb'],['🕘','History','hist']].filter(t=>isAdmin||t[2]!=='add:out').map(t=>`<button class='tile' data-g='${t[2]}' onclick='tl(this.dataset.g)'><span>${t[0]}</span>${t[1]}</button>`).join('')}</div>`}
+function tl(g){const a=g.split(':');go(a[0],a[1])}
+function addM(){if(!adm())return;if(S.members.length>=12)return err('Maximum 12 housemates');const n=S.members.length+(S.gone||[]).length+1;S.members.push({id:'m'+uid(),name:'Housemate '+n});save();render();toast('Housemate added')}
+function askRm(el){const id=el.dataset.m;sure('rm'+id,el,'Remove?',()=>rmM(id))}
+function rmM(id){if(!adm())return;if(S.members.length<=2)return err('You need at least 2 housemates');const b=Math.round((calc().bal[id]||0)*100)/100;if(Math.abs(b)>0.01)return err(rn(id)+(b>0?' should get back ':' still owes ')+fmt(Math.abs(b))+'. Settle up first.');const i=S.members.findIndex(m=>m.id===id);if(i<0)return;S.gone=(S.gone||[]).concat(S.members.splice(i,1));if(me===id)setMe(null);save();render();toast('Housemate removed')}
+function quickAdd(){if(!adm())return;const a=num($('#qa').value);if(!(a>0))return toast('Type an amount, for example 50');push({t:'in',who:null,amt:a});toast(fmt(a)+' added to the box');render()}
+function whoChips(){return `<div class='chips'>${S.members.map(m=>`<button class='chip ${m.id===me?'on':''}' data-m='${m.id}' onclick='setMe(this.dataset.m)'>${esc(m.name)}</button>`).join('')}</div>`}
+function welcome(){return `<h1>Welcome</h1><p class='sub'>Who are you? Tap your name.</p>${whoChips()}`}
+function meTab(){return `<h1>Me</h1><p class='sub'>You are <b>${me?nm(me):'?'}</b>.</p><button class='alt wide' onclick='logout()'>Log out</button><div class='tip'>${ref?'Shared with your housemates.':'Saved on this phone only.'}</div>`}
+isOwner=true;
+function acct(){if(!sess)return null;const a=S.admin;if(a&&a.user===sess.u&&a.hash===sess.h)return{role:'admin'};const us=S.users||{};for(const id in us){if(us[id].user===sess.u&&us[id].hash===sess.h&&S.members.some(m=>m.id===id))return{role:'member',id}}return null}
+async function hp(s,p){const t=s+':'+p;try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of t)h=(h*33^c.charCodeAt(0))>>>0;return 'f'+h}}
+function loginView(){
+ if(!S.admin||setupOpen)return isOwner&&(!connErr||localOnly)?setupView():`<h1>House Box</h1><p class='sub'>Loading… If this stays here, the host has not set up the house yet.</p>`;
+ return `<h1>Log in</h1><label>Username<input id='lu' autocapitalize='none' autocomplete='username'></label><label>Password<input id='lp' type='password' autocomplete='current-password'></label><p class='neg' id='err'></p><button class='wide' onclick='doLogin()'>Log in</button>`}
+function setupView(){return `<h1>Set up admin</h1><p class='sub'>Choose the host username and password.</p><label>Username<input id='au' autocapitalize='none' autocomplete='off'></label><label>Password<input id='ap' type='password' autocomplete='new-password'></label><p class='neg' id='err'></p><button class='wide' onclick='setupAdmin()'>Create admin account</button>${S.admin?`<button class='alt wide' onclick='setupOpen=false;render()'>Cancel</button>`:''}`}
+function startSess(u,h){sess={u,h};try{localStorage.setItem('houseBox.sess',JSON.stringify(sess))}catch(e){}}
+async function setupAdmin(){if(!isOwner)return;const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value;if(u.length<3||p.length<4)return err('Username 3+ letters, password 4+ characters');const salt=uid(),h=await hp(salt,p);S.admin={user:u,salt,hash:h};save();startSess(u,h);setupOpen=false;render()}
+async function doLogin(){const u=$('#lu').value.trim().toLowerCase(),p=$('#lp').value,c=[];if(S.admin)c.push(S.admin);Object.values(S.users||{}).forEach(x=>c.push(x));let ok=null;for(const a of c){if(a.user===u){const h=await hp(a.salt,p);if(h===a.hash)ok=h}}if(!ok)return err('Wrong username or password');startSess(u,ok);render()}
+async function setLogin(id){if(!adm())return;const u=$('#u_'+id).value.trim().toLowerCase(),p=$('#p_'+id).value,us=S.users=S.users||{},cur=us[id];if(u.length<3)return err('Username: 3+ letters');if((S.admin&&S.admin.user===u)||Object.keys(us).some(k=>k!==id&&us[k].user===u))return err('That username is taken');if(!p&&!cur)return err('Choose a password (4+ characters)');if(p&&p.length<4)return err('Password: 4+ characters');const salt=p?uid():cur.salt,h=p?await hp(salt,p):cur.hash;us[id]={user:u,salt,hash:h};save();render();toast('Login saved for '+rn(id))}
+function logout(){sess=null;try{localStorage.removeItem('houseBox.sess')}catch(e){}tab='house';render()}
+function badge(){const n=me?msgs(me).filter(x=>!x.paid).length:0;return n?' ('+n+')':''}
+function setMe(id){me=id;try{id?localStorage.setItem('houseBox.me',id):localStorage.removeItem('houseBox.me')}catch(e){}render()}
+function paid(eid){const e=S.log.find(x=>x.id===eid);if(!e||!me)return;e.paid=e.paid||{};e.paid[me]=true;S.log.push({id:uid(),ts:Date.now(),t:'pay',from:me,to:e.who,amt:e.amt/e.split.length,ref:eid});save();toast('Marked as paid');render()}
+function inbox(){
+ if(!me||!S.members.find(m=>m.id===me))return `<h1>Inbox</h1><p class='sub'>Who are you? Your payment messages will show here.</p><div class='chips'>${S.members.map(m=>`<button class='chip' data-m='${m.id}' onclick='setMe(this.dataset.m)'>${esc(m.name)}</button>`).join('')}</div>`;
+ const L=msgs(me),tot=L.filter(x=>!x.paid).reduce((s,x)=>s+x.amt,0),G=owedTo(me),gt=G.filter(x=>!x.paid).reduce((s,x)=>s+x.amt,0);
+ return `<h1>Inbox</h1><div class='sub' style='margin:-8px 0 12px'>Messages for <b>${nm(me)}</b> <button class='x' style='font-size:14px;padding:0 6px' onclick='setMe(null)'>not you?</button></div><div class='card' style='margin-bottom:12px'><div class='row'><span>You still have to pay</span><b class='${tot>0.01?'neg':'pos'}'>${fmt(tot)}</b></div><div class='row'><span>You will get back</span><b class='${gt>0.01?'pos':'sub'}'>${fmt(gt)}</b></div></div><div class='card'>${L.length?L.map(x=>`<div class='mail ${x.paid?'':'new'}'><div class='av'>${esc((rn(x.e.who)[0]||'?').toUpperCase())}</div><div class='mb'><div class='mt'><span>${nm(x.e.who)}</span><span class='sub'>${dt(x.e.ts)}</span></div><div>${x.paid?'':'<b>'}Please pay ${nm(x.e.who)} ${fmt(x.amt)}${x.paid?'':'</b>'}</div><div class='sub'>For ${esc(x.e.note)}: ${fmt(x.e.amt)} shared by ${x.e.split.length}</div>${x.paid?`<div class='pos' style='font-size:14px'>Paid</div>`:`<button class='sm' style='margin-top:8px' data-e='${x.e.id}' onclick='paid(this.dataset.e)'>I paid</button>`}</div></div>`).join(''):`<div class='row sub'>No messages yet.</div>`}</div><h2>Money to get back</h2><div class='card'>${G.length?G.map(x=>`<div class='mail ${x.paid?'':'new'}'><div class='av'>${esc((rn(x.from)[0]||'?').toUpperCase())}</div><div class='mb'><div class='mt'><span>${nm(x.from)}</span><span class='sub'>${dt(x.e.ts)}</span></div><div>${x.paid?'':'<b>'}${nm(x.from)} owes you ${fmt(x.amt)}${x.paid?'':'</b>'}</div><div class='sub'>For ${esc(x.e.note)}: ${fmt(x.e.amt)} shared by ${x.e.split.length}</div>${x.paid?`<div class='pos' style='font-size:14px'>Got it back</div>`:`<button class='sm' style='margin-top:8px' data-e='${x.e.id}' data-m='${x.from}' onclick='payFor(this.dataset.e,this.dataset.m)'>Get back</button>`}</div></div>`).join(''):`<div class='row sub'>Nobody owes you anything.</div>`}</div>`;
+}
+const rn=id=>(S.members.concat(S.gone||[]).find(m=>m.id===id)||{name:'?'}).name;
+function msgFor(e){const sh=e.amt/e.split.length,L=e.split.filter(id=>id!==e.who).map(id=>`• ${rn(id)}: ${fmt(sh)}`);return `🏠 House expense\n${rn(e.who)} bought ${e.note} for ${fmt(e.amt)}.\nShared by ${e.split.length} people: ${fmt(sh)} each.\n`+(L.length?`Please pay ${rn(e.who)}:\n${L.join('\n')}`:'Nobody owes anything.')}
+function doneTab(){
+ const e=S.log.find(x=>x.id===last);if(!e)return house();
+ const sh=e.amt/e.split.length,m=msgFor(e);
+ return `<h1>Expense saved</h1><div class='card'><div class='row'><span>${nm(e.who)} paid for ${esc(e.note)}</span><b>${fmt(e.amt)}</b></div><div class='row sub'><span>Split between ${e.split.length} people</span><span>${fmt(sh)} each</span></div>${e.split.filter(id=>id!==e.who).map(id=>`<div class='row'><span>${nm(id)} pays ${nm(e.who)}</span><b>${fmt(sh)}</b></div>`).join('')}</div><h2>Send to your housemates</h2><p class='sub'>It also shows in each housemate’s Inbox.</p><textarea id='msg' readonly rows='7'>${esc(m)}</textarea><button class='wide' onclick='shareMsg()'>Share message</button><a class='btn' href='https://wa.me/?text=${encodeURIComponent(m)}' target='_blank' rel='noopener'>Send on WhatsApp</a><button class='alt wide' onclick='copyMsg()'>Copy message</button><button class='alt wide' onclick='home()'>Done</button>`;
+}
+function home(){go('house')}
+function shareMsg(){const t=$('#msg').value;if(navigator.share)navigator.share({text:t}).catch(()=>{});else copyMsg()}
+function copyMsg(){const t=$('#msg');try{navigator.clipboard.writeText(t.value).then(()=>toast('Copied'),()=>fb(t))}catch(e){fb(t)}}
+function fb(t){t.select();try{document.execCommand('copy');toast('Copied')}catch(e){toast('Press and hold the text to copy')}}
+function sure(key,el,label,fn){if(armed===key){armed=null;fn();return}armed=key;const o=el.textContent;el.textContent=label;setTimeout(()=>{if(armed===key){armed=null;el.textContent=o}},3500)}
+function del(id){if(!adm())return;const x=S.log.find(e=>e.id===id);S.log=S.log.filter(e=>e.id!==id&&e.ref!==id);if(x&&x.ref){const o=S.log.find(e=>e.id===x.ref);if(o&&o.paid)delete o.paid[x.from]}save();render()}
+function resetAll(){if(!adm())return;const k=S.admin;S=def();S.admin=k;save();render();toast('Everything cleared')}
+function ren(id,v){if(!adm())return;const m=S.members.find(m=>m.id===id);if(m&&v.trim()){m.name=v.trim();save();toast('Saved')}}
+
+let connErr='',localOnly=false;
+const DB=(window.HB_DB||'').replace(/\/+$/,''),DBURL=DB+'/house.json';
+const syncNow=()=>{try{ref&&ref.set(JSON.parse(JSON.stringify(S))).catch(()=>{})}catch(e){}};
+async function pull(){
+  try{
+    const r=await fetch(DBURL,{cache:'no-store'});if(!r.ok)throw new Error(r.status);
+    const d=await r.json();
+    if(d){const x=fix(d);if((x.rev||0)>(S.rev||0)){S=x;if(roleReady&&(tab==='house'||tab==='hist'||tab==='inb'))render()}else if((x.rev||0)<(S.rev||0))syncNow()}
+    else if(S.admin||S.log.length)syncNow();
+    if(connErr||!roleReady){connErr='';roleReady=true;render()}
+  }catch(e){if(!roleReady||!connErr){roleReady=true;connErr='Cannot reach the database. Check your internet and the link in config.js.';render()}}
+}
+if(!DB||/PASTE/i.test(DB)){roleReady=true;localOnly=true;connErr='No database link yet. Data is saved on this phone only. Add your link in config.js.';}
+else{ref={set:d=>fetch(DBURL,{method:'PUT',body:JSON.stringify(d)}).then(r=>{if(!r.ok)throw{code:r.status}})};pull();setInterval(pull,5000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()})}
+render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
